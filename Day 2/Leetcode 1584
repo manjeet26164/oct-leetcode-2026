@@ -1,0 +1,68 @@
+Min cost to connect all pairs.
+// krushkal's algo by DSU 
+
+
+class Solution {        //By Krushkal's algo , DSU with minHeap
+    static int[] parent;
+    static int[] size;
+    public class Triplet implements Comparable<Triplet>{
+        int u;               // node = index of points array to get pair directly.
+        int v;
+        int dist;
+        Triplet(int u, int v, int dist){
+            this.u=u;
+            this.v=v;
+            this.dist=dist;
+        }
+        public int compareTo(Triplet t){
+            if(this.dist==t.dist) return this.u-t.u;
+            return this.dist-t.dist;
+        }
+    }
+    public int find(int a){
+        if(parent[a]==a) return a;
+        return parent[a]=find(parent[a]);
+    }
+    public void union(int a, int b){
+        a=find(a);
+        b=find(b);
+        if(a!=b){
+            if(size[a]>size[b]){
+                parent[b]=a;
+                size[a]+=size[b];
+            }
+            else{
+                parent[a]=b;
+                size[b]+=size[a];
+            }
+        }
+    }
+    public int minCostConnectPoints(int[][] points) {
+        PriorityQueue<Triplet> pq=new PriorityQueue<>();
+        int n=points.length;
+        parent=new int[n];
+        size=new int[n];
+        int minCost=0;
+        for(int i=0;i<n;i++){
+            parent[i]=i;
+            size[i]=i;
+        }
+        for(int i=0;i<n;i++){       // Making edge list.
+            for(int j=i+1;j<n;j++){
+                int x1=points[i][0], y1=points[i][1];
+                int x2=points[j][0], y2=points[j][1];
+                int dist=Math.abs(x2-x1)+ Math.abs(y2-y1);
+                pq.add(new Triplet(i,j,dist));
+            }
+        }
+        while(!pq.isEmpty()){
+            Triplet top=pq.remove();
+            int a=top.u, b=top.v, dist=top.dist;
+            if(find(a)!=find(b)){
+                minCost+=dist;
+                union(a,b);
+            }
+        }
+        return minCost;
+    }
+}
