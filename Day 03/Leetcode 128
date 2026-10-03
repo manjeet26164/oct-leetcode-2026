@@ -1,0 +1,25 @@
+Q.128 --> Longest consecutive sequence.
+// soltution in O(n)
+
+class Solution {
+    public int longestConsecutive(int[] nums) {
+        HashSet<Integer> set=new HashSet<>();
+        int n=nums.length;
+        for(int num:nums){
+            set.add(num);
+        }
+        int count=0;
+        for(int ele:set){
+            if(!set.contains(ele-1)){
+                int current=ele;
+                int min=1;;
+                while(set.contains(current+1)){
+                    current++;
+                    min++;
+                }
+                count=Math.max(min,count);
+            }
+        }
+        return count;
+    }
+}
