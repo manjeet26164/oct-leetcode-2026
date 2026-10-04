@@ -1,0 +1,22 @@
+q. --> koko eating banana.
+// Binary search approach.
+
+class Solution {
+    public int minEatingSpeed(int[] piles, int h) {
+        int low=1;
+        int high=0;
+        for(int max:piles){
+            high=Math.max(max,high);
+        }
+        while(low<=high){
+            int k=low+(high-low)/2;
+            long hour=0;
+            for(int pile:piles){
+                hour+=(pile+k-1)/k;
+            }
+            if(hour<=h) high=k-1;
+            else low=k+1;
+        }
+        return low;
+    }
+}
