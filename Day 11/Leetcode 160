@@ -1,0 +1,43 @@
+Intersection of two linked list.
+// find length and move pointer k steps.
+
+public class Solution {
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        ListNode temp1=headA;
+        ListNode temp2=headB;
+        int len1=0;
+        while(temp1!=null){
+            len1++;
+            temp1=temp1.next;
+        }
+        temp1=headA;
+        int len2=0;
+        while(temp2!=null){
+            len2++;
+            temp2=temp2.next;
+        }
+        temp2=headB;
+        int diff=0;
+        if(len2>len1){
+            diff=len2-len1;
+        }
+        else{
+            diff=len1-len2;
+        }
+        while(diff>0){
+            if(len2>len1){
+                temp2=temp2.next;
+                diff--;
+            }
+            if(len1>len2){
+                temp1=temp1.next;
+                diff--;
+            }
+        }
+        while(temp1!=temp2){
+            temp1=temp1.next;
+            temp2=temp2.next;
+        }
+        return temp1;
+    }
+}
