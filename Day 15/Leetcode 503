@@ -1,0 +1,20 @@
+Next greater element II
+
+class Solution {
+    public int[] nextGreaterElements(int[] nums) {
+        int n=nums.length;
+        Stack<Integer> st=new Stack<>();
+        int[] ans=new int[n];
+        Arrays.fill(ans,-1);
+        for(int i=0;i<n*2;i++){
+            int index=i%n;
+            while(!st.isEmpty() && nums[index]>nums[st.peek()]){
+                int top=st.pop();
+                ans[top]=nums[index];
+            }
+            if(i<n)
+                st.push(i);
+        }
+        return ans;
+    }
+}
