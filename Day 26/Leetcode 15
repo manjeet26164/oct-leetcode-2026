@@ -1,0 +1,41 @@
+3 Sum
+
+// 2 sum approach hi h but i=0, or j=i+1 rakhenge or k ko last me. ab sum check krenge agar sum kam aa rha h to sum ko bdane ke liye j++ krenge, naki k--, kyuki 0 se kam h to kam vali value ko bdaege k to sbse bdi h hi isiliye usse kam krenge to sum or kam aaega. 
+// ir sath sath duplicates bhi check krenge agar j = -1,-1 do baar h to piche vale se check krenge agar piche cala same h to bda denge isse duplicates nhi aaege. Same for i.
+// Same for k ke sath k ko k+1 se compare krenge same h to k-- kra denge 
+
+
+class Solution {
+    public List<List<Integer>> threeSum(int[] nums) {
+        Arrays.sort(nums);
+        int n=nums.length;
+        List<List<Integer>> ans=new ArrayList<>();
+        for(int i=0;i<n-2;i++){
+            if(i>0 && nums[i]==nums[i-1]){
+                continue;
+            }
+            int j=i+1;
+            int k=n-1;
+            while(j<k){
+                int sum=nums[i]+nums[j]+nums[k];
+                if(sum==0){
+                    ans.add(Arrays.asList(nums[i],nums[j],nums[k]));
+                    j++;
+                    k--;
+                    while(j<k && nums[j]==nums[j-1]){
+                        j++;
+                    }
+                    while(j<k && nums[k]==nums[k+1]){
+                        k--;
+                    }
+                }
+                else if(sum<0){
+                    j++;
+                }
+                else if(sum>0) k--;
+            }
+        }
+        return ans;
+    }
+}
+
