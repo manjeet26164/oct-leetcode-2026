@@ -1,0 +1,21 @@
+Subarray sum equals K
+
+class Solution {
+    public int subarraySum(int[] nums, int k) {
+        HashMap<Integer,Integer> map=new HashMap<>();
+        // (0,1) isiliye add krte h taki aage need 0 aaye to mtlb hme kisi ki jrurt nhi h or voo map me hona chaiye taki uski value add kra ske count me. 
+        map.put(0,1);
+        int pre=0;
+        
+        int count=0;
+        for(int i=0;i<nums.length;i++){
+            pre+=nums[i];
+            int need=pre-k;
+            if(map.containsKey(need)){
+                count+=map.get(need);
+            }
+            map.put(pre,map.getOrDefault(pre,0)+1);
+        }
+        return count;
+    }
+}
