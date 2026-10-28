@@ -1,0 +1,36 @@
+Search in Rotated sorted array II
+
+class Solution {
+    public boolean search(int[] nums, int target) {
+        int n=nums.length;
+        int low=0;
+        int high=n-1;
+        while(low<=high){
+            int mid=low+(high-low)/2;
+            if(target==nums[mid]){
+                return true;
+            }
+            if(nums[low]==nums[mid] && nums[mid]==nums[high]){      // Yee duplicay remove krta h, agar low,high,mid sare same hue to pta nhi chlega kis side move krna h isiliye sab same h to ek ek aage or piche krdo.
+                low++;
+                high--;
+            }
+            else if(nums[low]<=nums[mid]){
+                if(target>=nums[low] && target<nums[mid]){
+                    high=mid-1;
+                }
+                else{
+                    low=mid+1;
+                }
+            }
+            else{
+                if(target>nums[mid] && target<=nums[high]){
+                    low=mid+1;
+                }
+                else{
+                    high=mid-1;
+                }
+            }
+        }
+        return false;
+    }
+}
